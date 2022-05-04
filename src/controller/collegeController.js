@@ -16,7 +16,7 @@ const createCollege = async function (req, res){
  if(!data.name.match(regex)) return res.status(400).send({ status: false, message: "NAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
  if(!data.fullName.match(regex)) return res.status(400).send({ status: false, message: "FULLNAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
   const createData = await CollegeModel.create(data)
-  res.status(201).send({status:true, data:createData})
+  res.status(201).send({status:true, College:createData})
  }
 
 
