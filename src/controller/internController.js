@@ -38,12 +38,17 @@ const createIntern = async function (req, res) {
 const getList = async function (req, res) {
     try {
         const data = req.query.collegeName
-        if (!data) return res.status(400).send({ status: false, message: "ADD FILTERS IN QUERY" })
-        const getData = await CollegeModel.findOne({ name: data }).select({ _id: 1 })
+         if (!data) return res.status(400).send({ status: false, message: "ADD FILTERS IN QUERY" })
+        
+        const getData = await CollegeModel.findOne({ name: data  })
+        if(!getData)return res.status(400).send({status:false,message:"COLLEGE NOT CREATED YET"})
+        if(getData.isDeleted==true)return res.status(400).send({status:false,message:"THE COLLEGE YOU ARE TRYING TO ENTER IS DELETED"})
 
-        const Intern = await InternModel.find({ collegeId: getData })
-        const College = await CollegeModel.findOne({ name: data })
-        let collegeDetails = { name: College.name, fullName: College.fullName, logoLink: College.logoLink, interns: Intern }
+        const Intern = await InternModel.find({ collegeId: getData._id,isDeleted:false }).select({name:1,mobile:1,email:1})
+        
+        if(Intern.length==0)return res.status(400).send({status:false,message:"Intern is either deleted or not present"})
+        const College = await CollegeModel.findOne({ name: data ,isDeleted:false})
+        let collegeDetails = { name: College.name, fullName: College.fullName, logoLink: College.logoLink, interns: Intern}
         res.status(200).send({ status: true, data: collegeDetails })
 
     } catch (error) {
