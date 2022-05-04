@@ -1,5 +1,6 @@
 const InternModel = require('../models/Intern Model')
-const mongoose=require('mongoose')
+const mongoose=require('mongoose');
+const CollegeModel = require('../models/College Model');
 const isValidObjectId = (objectId) => { return mongoose.Types.ObjectId.isValid(objectId)};
 
 
@@ -28,4 +29,13 @@ const createIntern = async function(req,res){
 catch(error){
     res.status(500).send({status:false,message:error.message})
 }}
-module.exports.createIntern=createIntern
+
+const getList = async function(req, res){
+    const data = req.query.name
+    const getData = await CollegeModel.findOne({name:data}).select({_id:1})
+    const College = await CollegeModel.findOne({name:data})
+    const Intern = await InternModel.find({collegeId:getData})
+    res.status(200).send({status:true, College:College,Intern})
+}
+module.exports={createIntern,getList}
+
