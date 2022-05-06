@@ -104,8 +104,8 @@ const getList = async function (req, res) {
 
         // const College = await CollegeModel.findOne({ name: data, isDeleted: false })
         // let collegeDetails = { name: College.name, fullName: College.fullName, logoLink: College.logoLink, interns: Intern2 }
-        let collegeDetails = { name: getData.name, fullName:getData.fullName, logoLink: getData.logoLink, interests: Intern2,isDeleted:getData.isDeleted }
-        return res.status(200).send({ status: true, Collegedetails: { data: collegeDetails } })
+        let collegeDetails = { name: getData.name, fullName:getData.fullName, logoLink: getData.logoLink,isDeleted:getData.isDeleted, interests: Intern2 }
+        return res.status(200).send({ status: true, data: collegeDetails})
     }
     // else return res.status(400).send({ status: false, message: "Intern is deleted" })}
 
