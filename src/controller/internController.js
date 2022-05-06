@@ -10,7 +10,7 @@ const createIntern = async function (req, res) {
         let data = req.body
         
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "Data is required" })
-        let regex = /^[a-zA-Z]{2,30}$/
+       // let regex = /^[a-zA-Z]{2,30}$/
         let mobileregex = /^[6-9]\d{9}$/
         let emailregex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         if (!data.name) {
@@ -27,9 +27,9 @@ const createIntern = async function (req, res) {
             return res.status(400).send({ status: false, message: "KINDLY ADD collegeName" })
         }
         //REGEX VALIDATIONS
-        if (!data.name.match(regex)) {
-            return res.status(400).send({ status: false, message: "NAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
-        }
+       // if (!data.name.match(regex)) {
+          //  return res.status(400).send({ status: false, message: "NAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
+        //}
         if (!data.mobile.match(mobileregex)) {
             return res.status(400).send({ status: false, message: "MOBILE NO. SHOULD BE IN VALID FORMAT" })
         }
@@ -62,7 +62,7 @@ const createIntern = async function (req, res) {
         let Intern = { name: data.name, email: data.email, mobile: data.mobile, collegeId: college._id, isDeleted: data.isDeleted }
         let saved = await InternModel.create(Intern)
         let find = await InternModel.findOne({name:data.name,email:data.email}).select({name:1, email:1,mobile:1,collegeId:1,isDeleted:1,_id:0})
-        res.status(201).send({ status: true, Intern: find })
+        res.status(201).send({ status: true, data:find })
     }
     catch (error) {
         res.status(500).send({ status: false, message: error.message })
@@ -104,7 +104,7 @@ const getList = async function (req, res) {
 
         // const College = await CollegeModel.findOne({ name: data, isDeleted: false })
         // let collegeDetails = { name: College.name, fullName: College.fullName, logoLink: College.logoLink, interns: Intern2 }
-        let collegeDetails = { name: getData.name, fullName:getData.fullName, logoLink: getData.logoLink, interns: Intern2 }
+        let collegeDetails = { name: getData.name, fullName:getData.fullName, logoLink: getData.logoLink, interests: Intern2,isDeleted:getData.isDeleted }
         return res.status(200).send({ status: true, Collegedetails: { data: collegeDetails } })
     }
     // else return res.status(400).send({ status: false, message: "Intern is deleted" })}

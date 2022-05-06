@@ -40,8 +40,8 @@ try{
      return res.status(400).send({ status: false, message: "NAME ALREADY EXISTS" })
      }
   const createData = await CollegeModel.create(data)
-  const find = await CollegeModel.findOne({name:data.name,fullName:data.fullName}).select({name:1,fullName:1,logoLink:1,isDeleted:1,_id:0})
-  res.status(201).send({ status: true, College: find })
+  const find = await CollegeModel.findOne({name:data.name,fullName:data.fullName}).select({name:1,fullName:1,logoLink:1,isDeleted:1})
+  res.status(201).send({ status: true, data: find})
 }catch(error){
   res.status(500).send({status:false,message:error.message})
 }
