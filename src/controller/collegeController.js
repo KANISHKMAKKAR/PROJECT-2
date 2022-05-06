@@ -9,7 +9,7 @@ try{
   return res.status(400).send({ status: false, message: "Data is required" })
   }
   let regex = /^[a-zA-Z ]{2,30}$/
-  let regex1 = /^[a-zA-Z ]{2,100}$/
+  // let regex1 = /^[a-zA-Z]{2,100}$/
   let linkregex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
   //let linkregex=/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
   if (!data.name){ 
@@ -26,9 +26,9 @@ try{
   if (!data.name.match(regex)){
      return res.status(400).send({ status: false, message: "NAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
   }
-  if (!data.fullName.match(regex1)){
-     return res.status(400).send({ status: false, message: "FULLNAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-100" })
-  }
+  // if (!data.fullName.match(regex1)){
+  //    return res.status(400).send({ status: false, message: "FULLNAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-100" })
+  // }
         if (!data.logoLink.match(linkregex)) {
           return res.status(400).send({ status: false, message: "LINK SHOULD BE A VALID S3 URL" })
         }
@@ -40,7 +40,8 @@ try{
      return res.status(400).send({ status: false, message: "NAME ALREADY EXISTS" })
      }
   const createData = await CollegeModel.create(data)
-  res.status(201).send({ status: true, College: createData })
+  const find = await CollegeModel.findOne({name:data.name,fullName:data.fullName}).select({name:1,fullName:1,logoLink:1,isDeleted:1,_id:0})
+  res.status(201).send({ status: true, College: find })
 }catch(error){
   res.status(500).send({status:false,message:error.message})
 }

@@ -44,11 +44,11 @@ const createIntern = async function (req, res) {
         //     if (intern.collegeId == data.collegeId) {
             // return res.status(400).send({ status: false, message: "You have already applied for this college" }) }
         // }
-        let duplicateNumber = await InternModel.findOne({ mobile: data.mobile })
-        if (duplicateNumber) return res.status(400).send({ status: false, message: "MOBILE NUMBER ALREADY EXISTS" })
+        
         let duplicate = await InternModel.findOne({ email: data.email })
         if (duplicate) { return res.status(400).send({ status: false, message: "EMAIL ALREADY EXISTS" }) }
-
+        let duplicateNumber = await InternModel.findOne({ mobile: data.mobile })
+        if (duplicateNumber) return res.status(400).send({ status: false, message: "MOBILE NUMBER ALREADY EXISTS" })
         //if (!isValidObjectId(data.collegeId)) {
         // return res.status(400).send({ status: false, message: "NOT A VALID COLLEGE ID" })
         // }
@@ -61,7 +61,8 @@ const createIntern = async function (req, res) {
         // }
         let Intern = { name: data.name, email: data.email, mobile: data.mobile, collegeId: college._id, isDeleted: data.isDeleted }
         let saved = await InternModel.create(Intern)
-        res.status(201).send({ status: true, Intern: saved })
+        let find = await InternModel.findOne({name:data.name,email:data.email}).select({name:1, email:1,mobile:1,collegeId:1,isDeleted:1,_id:0})
+        res.status(201).send({ status: true, Intern: find })
     }
     catch (error) {
         res.status(500).send({ status: false, message: error.message })
