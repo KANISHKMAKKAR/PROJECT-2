@@ -2,7 +2,7 @@ const CollegeModel = require("../models/College Model")
 
 
 const createCollege = async function (req, res) {
-
+try{
   const data = req.body
 
   if (Object.keys(data).length === 0){
@@ -41,7 +41,9 @@ const createCollege = async function (req, res) {
      }
   const createData = await CollegeModel.create(data)
   res.status(201).send({ status: true, College: createData })
+}catch(error){
+  res.status(500).send({status:false,message:error.message})
 }
-
+}
 
 module.exports.createCollege = createCollege
