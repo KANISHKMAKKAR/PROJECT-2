@@ -4,8 +4,8 @@ const collegeController = require("../controller/collegeController")
 const internController = require('../controller/internController')
 
 
-router.post("/functionup/colleges", collegeController.createCollege)
-router.post("/functionup/interns", internController.createIntern)
-router.get("/functionup/collegeDetails", internController.getList)
+router.post("/colleges", collegeController.createCollege)
+router.post("/interns", internController.createIntern)
+router.get("/collegeDetails", internController.getList)
 
 module.exports = router

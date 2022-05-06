@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://functionup-uranium-cohort:q8znVj4ly0Fp0mpU@clust
 
 
 
-app.use('/', route);
+app.use('/functionup', route);
 
 
 app.listen(process.env.PORT || 3000, function () {
