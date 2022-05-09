@@ -102,4 +102,16 @@ College details
       }
     ]
   }
-}
+} // let names = ['Kunal', 'Ssrthak', 'Kanishk'];
+        // let namesStartingWithK= names.map(function(val){
+        //     if(val[0] === 'K')
+        //     {
+        //         return  val + ' cool guy';
+        //     }
+        // })
+        // let namesStartingWithKWithArrow= names.map((val)=>{
+        //     if(val[0] === 'K')
+        //     {
+        //         return  val + ' cool guy';
+        //     }
+        // })

@@ -30,14 +30,16 @@ const createIntern = async function (req, res) {
        // if (!data.name.match(regex)) {
           //  return res.status(400).send({ status: false, message: "NAME SHOULD ONLY CONTAIN ALPHABETS AND LENGTH MUST BE IN BETWEEN 2-30" })
         //}
-        if (!data.mobile.match(mobileregex)) {
-            return res.status(400).send({ status: false, message: "MOBILE NO. SHOULD BE IN VALID FORMAT" })
-        }
+        
+        
         if (!data.email.match(emailregex)) {
             return res.status(400).send({ status: false, message: "EMAIL SHOULD BE IN VALID FORMAT" })
         }
         if (data.isDeleted == true) {
             return res.status(400).send({ status: false, message: "CANT DELETE BEFORE CREATION" })
+        }
+        if (!data.mobile.match(mobileregex)) {
+            return res.status(400).send({ status: false, message: "MOBILE NO. SHOULD BE IN VALID FORMAT" })
         }
         //let intern = await InternModel.findOne({ name: data.name, email: data.email, mobile: data.mobile })
         // if (intern) {
@@ -75,7 +77,7 @@ const getList = async function (req, res) {
         const data = req.query.collegeName
 
         if (!data) {
-            return res.status(400).send({ status: false, message: "SHOULD GIVE ANY QUERY" })
+            return res.status(400).send({ status: false, message: "PAGE NOT FOUND" })
         }
         const getData = await CollegeModel.findOne({ name: data })
         if (!getData) {
@@ -96,6 +98,7 @@ const getList = async function (req, res) {
         //     if (Intern1[i].isDeleted == false) {
 
         let Intern = Intern1.filter(x => x.isDeleted == false)
+       
         if (Intern.length == 0) {
             return res.status(404).send({ status: false, message: "ALL INTERNS ARE DELETED" })
         }

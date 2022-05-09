@@ -35,8 +35,8 @@ try{
   if (data.isDeleted == true) {
   return res.status(400).send({ status: false, message: "CANT DELETE BEFORE CREATION" })
   }
-  let duplicate = await CollegeModel.find({ name: data.name })
-  if (duplicate.length != 0) {
+  let duplicate = await CollegeModel.findOne({ name: data.name })
+  if (duplicate) {
      return res.status(400).send({ status: false, message: "NAME ALREADY EXISTS" })
      }
   const createData = await CollegeModel.create(data)
